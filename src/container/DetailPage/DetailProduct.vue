@@ -55,6 +55,10 @@ export default {
           to: "/"
         },
         {
+          text: "Cart",
+          to: "/cart"
+        },
+        {
           text: "Detail",
           active: true
         }

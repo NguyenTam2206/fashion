@@ -1,8 +1,8 @@
 <template>
   <div class="row my-2 text-capitalize text-center align-items-center">
-    <div class="col-10 mx-auto col-lg-2">
-      <img :src="product.img" style="width: 5rem; height: 5rem;" alt="img" class="img-fluid" />
-    </div>
+    <router-link tag="div" to="/detail" class="col-10 mx-auto col-lg-2">
+      <img :src="product.img" style="width: 8rem; cursor: pointer" alt="img" class="img-fluid" @click="$store.state.handleDetail(product.id)"/>
+    </router-link>
     <div class="col-10 mx-auto col-lg-2">
         <span>{{product.title}}</span>
     </div>
