@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
         cartSubTotal : 0,
         cartTax : 0,
         cartTotal : 0,
+        loading : true,
         setProducts() {
             let tempProducts = [];
             storeProducts.forEach(item => {
@@ -18,6 +19,10 @@ export const store = new Vuex.Store({
                 tempProducts = [...tempProducts, singleItem]
             });
             this.products = tempProducts;
+            // this.loading = false;
+            setTimeout(() => {
+                this.loading = false;
+            }, 1000);
         },
         addCart(id) {
             let tempProducts = [...this.products];
