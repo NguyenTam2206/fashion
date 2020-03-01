@@ -15,7 +15,7 @@ export default {
     BackTopBtn,
   },
   created() {
-    this.$store.state.setProducts()
+    this.$store.commit('setProducts');
   }
 }
 </script>

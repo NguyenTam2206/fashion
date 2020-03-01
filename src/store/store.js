@@ -1,96 +1,24 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {storeProducts, detailProduct} from '../data';
+import { storeProducts, detailProduct } from '../data';
 
 Vue.use(Vuex);
 export const store = new Vuex.Store({
-    state : {
-        products : [],
+    state: {
+        products: [],
         detailProduct,
-        cart : [],
-        cartSubTotal : 0,
-        cartTax : 0,
-        cartTotal : 0,
-        loading : true,
-        setProducts() {
-            let tempProducts = [];
-            storeProducts.forEach(item => {
-                const singleItem = {...item};
-                tempProducts = [...tempProducts, singleItem]
-            });
-            this.products = tempProducts;
-            // this.loading = false;
-            setTimeout(() => {
-                this.loading = false;
-            }, 1000);
-        },
-        addCart(id) {
-            let tempProducts = [...this.products];
-            const index = tempProducts.indexOf(this.getItem(id));
-            const product = tempProducts[index];
-            product.inCart = true;
-            product.count = 1;
-            const price = product.price;
-            product.total = price;
-            this.products = tempProducts;
-            this.cart = [...this.cart, product]
-            this.quantifyCartItem()
-            this.addTotals()
-        },
-        quantifyCartItem() {
-            let quantify = this.cart.length;
-            return quantify
-        },
+        cart: [],
+        cartSubTotal: 0,
+        cartTax: 0,
+        cartTotal: 0,
+        loading: true,
         getItem(id) {
             const product = this.products.find(item => item.id === id);
             return product;
         },
-        handleDetail(id) {
-            const product = this.getItem(id);
-            return this.detailProduct = product
-        },
-        increment(id) {
-            let tempCart = [...this.cart];
-            const selectedProduct = tempCart.find(item => item.id === id);
-            const index = tempCart.indexOf(selectedProduct);
-            const product = tempCart[index];
-            product.count = product.count + 1;
-            product.total = product.count * product.price;
-            this.cart = [...tempCart];
-            this.addTotals();
-        },
-        decrement(id) {
-            let tempCart = [...this.cart];
-            const selectedProduct = tempCart.find(item => item.id === id);
-            const index = tempCart.indexOf(selectedProduct);
-            const product = tempCart[index];
-            product.count = product.count - 1;
-            if(product.count === 0){
-                this.removeItem(id)
-            }
-            else{
-                product.total = product.count * product.price;
-                this.cart = [...tempCart];
-                this.addTotals();
-            }
-        },
-        removeItem(id) {
-            let tempProducts = [...this.products];
-            let tempCart = [...this.cart];
-            tempCart = tempCart.filter(item => item.id !== id);
-            const index = tempProducts.indexOf(this.getItem(id));
-            let removeProduct = tempProducts[index];
-            removeProduct.inCart = false;
-            removeProduct.count = 0;
-            removeProduct.total = 0;
-            this.cart = [...tempCart];
-            this.products = [...tempProducts];
-            this.addTotals();
-        },
-        clearCart() {
-            this.cart = [];
-            this.setProducts();
-            this.addTotals();
+        quantifyCartItem() {
+            let quantify = this.cart.length;
+            return quantify
         },
         addTotals() {
             let subTotal = 0;
@@ -103,6 +31,80 @@ export const store = new Vuex.Store({
             this.cartSubTotal = subTotal;
             this.cartTax = tax;
             this.cartTotal = total;
-        }
+        },
+    },
+    mutations: {
+        setProducts(state) {
+            let tempProducts = [];
+            storeProducts.forEach(item => {
+                const singleItem = { ...item };
+                tempProducts = [...tempProducts, singleItem]
+            });
+            state.products = tempProducts;
+            // this.loading = false;
+            state.loading = false;
+        },
+        addCart(state, id) {
+            let tempProducts = [...state.products];
+            const index = tempProducts.indexOf(state.getItem(id));
+            const product = tempProducts[index];
+            product.inCart = true;
+            product.count = 1;
+            const price = product.price;
+            product.total = price;
+            state.products = tempProducts;
+            state.cart = [...state.cart, product]
+            state.quantifyCartItem()
+            state.addTotals()
+        },
+        handleDetail(state,id) {
+            const product = state.getItem(id);
+            return state.detailProduct = product
+        },
+        increment(state,id) {
+            let tempCart = [...state.cart];
+            const selectedProduct = tempCart.find(item => item.id === id);
+            const index = tempCart.indexOf(selectedProduct);
+            const product = tempCart[index];
+            product.count = product.count + 1;
+            product.total = product.count * product.price;
+            state.cart = [...tempCart];
+            state.addTotals();
+        },
+        decrement(state,id) {
+            let tempCart = [...state.cart];
+            const selectedProduct = tempCart.find(item => item.id === id);
+            const index = tempCart.indexOf(selectedProduct);
+            const product = tempCart[index];
+            product.count = product.count - 1;
+            if (product.count === 0) {
+                state.removeItem(id)
+            }
+            else {
+                product.total = product.count * product.price;
+                state.cart = [...tempCart];
+                state.addTotals();
+            }
+        },
+        removeItem(state,id) {
+            let tempProducts = [...state.products];
+            let tempCart = [...state.cart];
+            tempCart = tempCart.filter(item => item.id !== id);
+            const index = tempProducts.indexOf(state.getItem(id));
+            let removeProduct = tempProducts[index];
+            removeProduct.inCart = false;
+            removeProduct.count = 0;
+            removeProduct.total = 0;
+            state.cart = [...tempCart];
+            state.products = [...tempProducts];
+            state.addTotals();
+        },
+        clearCart(state) {
+            state.cart = [];
+            this.commit('setProducts')
+            state.addTotals();
+        },
     }
 })
+
+//https://code.tutsplus.com/vi/tutorials/how-to-build-complex-large-scale-vuejs-applications-with-vuex--cms-30952

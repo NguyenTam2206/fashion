@@ -3,11 +3,11 @@
     <div class="card">
       <div class="img-container">
         <router-link to="/detail" tag="span">
-          <img :src="product.img" alt="product" class="card-img-top" @click="$store.state.handleDetail(product.id)" />
+          <img :src="product.img" alt="product" class="card-img-top" @click="$store.commit('handleDetail', product.id)" />
         </router-link>
         <button class="cart-btn" >
           <router-link to="/cart" tag="span" v-if="product.inCart">In Cart</router-link>
-          <span v-else @click="$store.state.addCart(product.id)">
+          <span v-else @click="addCart(product.id)">
             <i class="fas fa-shopping-cart"></i>
           </span>
         </button>
@@ -30,6 +30,11 @@ export default {
   data() {
     return {};
   },
+  methods : {
+    addCart(id) {
+      this.$store.commit('addCart', id )
+    }
+  },
   props: {
     product: {
       type: Object
@@ -38,8 +43,6 @@ export default {
       type: Number
     }
   },
-  methods: {
-  }
 };
 </script>
 

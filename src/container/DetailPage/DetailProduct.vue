@@ -27,7 +27,7 @@
             style="width: 150px;"
           >Buy Now</router-link>
           <button
-            @click="$store.state.addCart(detailProduct.id)"
+            @click="$store.commit('addCart', detailProduct.id)"
             class="btn btn-outline-danger mx-2"
             style="width: 150px;"
             :disabled="detailProduct.inCart? true : false"

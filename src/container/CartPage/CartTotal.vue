@@ -6,7 +6,7 @@
           <button class="btn btn-outline-info mb-3 mr-2">Mua Thêm</button>
         </router-link>
         <router-link to="/">
-          <button class="btn btn-outline-danger mb-3" @click="$store.state.clearCart()">Xóa giỏ hàng</button>
+          <button class="btn btn-outline-danger mb-3" @click="$store.commit('clearCart')">Xóa giỏ hàng</button>
         </router-link>
         <h5>
             <span>
