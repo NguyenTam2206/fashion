@@ -20,18 +20,18 @@ export const store = new Vuex.Store({
             let quantify = this.cart.length;
             return quantify
         },
-        addTotals() {
-            let subTotal = 0;
-            this.cart.map(item => {
-                return subTotal += item.total
-            });
-            const tempTax = subTotal * 0.1;
-            const tax = parseFloat(tempTax.toFixed(2));
-            const total = subTotal + tax
-            this.cartSubTotal = subTotal;
-            this.cartTax = tax;
-            this.cartTotal = total;
-        },
+        // addTotals() {
+        //     let subTotal = 0;
+        //     this.cart.map(item => {
+        //         return subTotal += item.total
+        //     });
+        //     const tempTax = subTotal * 0.1;
+        //     const tax = parseFloat(tempTax.toFixed(2));
+        //     const total = subTotal + tax
+        //     this.cartSubTotal = subTotal;
+        //     this.cartTax = tax;
+        //     this.cartTotal = total;
+        // },
     },
     mutations: {
         setProducts(state) {
@@ -55,11 +55,23 @@ export const store = new Vuex.Store({
             state.products = tempProducts;
             state.cart = [...state.cart, product]
             state.quantifyCartItem()
-            state.addTotals()
+            this.commit('addTotals')
         },
         handleDetail(state,id) {
             const product = state.getItem(id);
             return state.detailProduct = product
+        },
+        addTotals(state) {
+            let subTotal = 0;
+            state.cart.map(item => {
+                return subTotal += item.total
+            });
+            const tempTax = subTotal * 0.1;
+            const tax = parseFloat(tempTax.toFixed(2));
+            const total = subTotal + tax
+            state.cartSubTotal = subTotal;
+            state.cartTax = tax;
+            state.cartTotal = total;
         },
         increment(state,id) {
             let tempCart = [...state.cart];
@@ -69,7 +81,7 @@ export const store = new Vuex.Store({
             product.count = product.count + 1;
             product.total = product.count * product.price;
             state.cart = [...tempCart];
-            state.addTotals();
+            this.commit('addTotals');
         },
         decrement(state,id) {
             let tempCart = [...state.cart];
@@ -83,7 +95,7 @@ export const store = new Vuex.Store({
             else {
                 product.total = product.count * product.price;
                 state.cart = [...tempCart];
-                state.addTotals();
+                this.commit('addTotals');
             }
         },
         removeItem(state,id) {
@@ -97,13 +109,11 @@ export const store = new Vuex.Store({
             removeProduct.total = 0;
             state.cart = [...tempCart];
             state.products = [...tempProducts];
-            state.addTotals();
-        },
+            this.commit('addTotals');        },
         clearCart(state) {
             state.cart = [];
             this.commit('setProducts')
-            state.addTotals();
-        },
+            this.commit('addTotals');        },
     }
 })
 
