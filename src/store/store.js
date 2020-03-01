@@ -78,7 +78,7 @@ export const store = new Vuex.Store({
             const product = tempCart[index];
             product.count = product.count - 1;
             if (product.count === 0) {
-                state.removeItem(id)
+                this.commit('removeItem',id)
             }
             else {
                 product.total = product.count * product.price;
