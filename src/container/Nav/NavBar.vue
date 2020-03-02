@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="light" variant="light">
       <b-navbar-brand href="#">
-        <router-link to="/" tag="img" :src="Logo" alt style="height: 40px; width: 40px;"></router-link>               
+        <router-link to="/" tag="img" :src="Logo" alt style="height: 40px; width: 40px;"></router-link>
       </b-navbar-brand>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
@@ -56,12 +56,22 @@
                 <i class="fas fa-user"></i>
               </em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+            <b-dropdown-item>
+              <div v-if="!$auth.loading">
+                <!-- show login when not authenticated -->
+                <a v-if="!$auth.isAuthenticated" @click="login" class="button is-dark">
+                  <strong>Sign in</strong>
+                </a>
+                <!-- show logout when authenticated -->
+                <a v-if="$auth.isAuthenticated" @click="logout" class="button is-dark">
+                  <strong>Log out</strong>
+                </a>
+              </div>
+            </b-dropdown-item>
           </b-nav-item-dropdown>
-           <router-link to="/cart" tag="b-nav-item">
+          <router-link to="/cart" tag="b-nav-item">
             <Cart />
-           </router-link>
+          </router-link>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -70,7 +80,7 @@
 
 <script>
 import Logo from "../../assets/logo.svg";
-import Cart from '../../components/Cart';
+import Cart from "../../components/Cart";
 export default {
   data() {
     return {
@@ -85,10 +95,18 @@ export default {
       } else if (this.lang === "EN") {
         this.lang = "VI";
       }
+    },
+    login() {
+      this.$auth.loginWithRedirect();
+    },
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
     }
   },
-  components : {
-    Cart,
+  components: {
+    Cart
   }
 };
 </script>
