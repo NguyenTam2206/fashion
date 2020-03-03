@@ -8,10 +8,10 @@
 export default {
   props : {
     linkto : {
-      type : Object
+      type : String
     },
     content : {
-        type : Object
+        type : String
     }
   },
 };

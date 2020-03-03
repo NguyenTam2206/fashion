@@ -17,12 +17,12 @@ import ProductsList from "../../components/ProductsList";
 export default {
   data() {
     return {
-      id: this.$route.params.id, //note this.$route
+      id: this.$route.params.id,
     };
   },
   computed: {
     products() {
-      return this.$store.getters.get12Products;
+      return this.$store.getters.getAllProducts;
     },
   },
   components: {

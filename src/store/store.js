@@ -12,7 +12,6 @@ export const store = new Vuex.Store({
         cartTax: 0,
         cartTotal: 0,
         loading: true,
-        showProducts : [],
         getItem(id) {
             const product = this.products.find(item => item.id === id);
             return product;
@@ -29,27 +28,14 @@ export const store = new Vuex.Store({
             for(let i = 0 ; i < 8 ; i++) {
                 products.push(state.products[i])
             }
-            return state.showProducts = products
+            return products
         },
-        get12Products(state) {
-            let products = [];
-            for(let i = 0 ; i < 12 ; i++) {
-                products.push(state.products[i])
-            }
-            return state.showProducts = products
+        getAllProducts(state) {
+            return state.products
         },
     },
 
     mutations: {
-        // setProducts(state) {
-        //     let tempProducts = [];
-        //     storeProducts.forEach(item => {
-        //         const singleItem = { ...item };
-        //         tempProducts = [...tempProducts, singleItem]
-        //     });
-        //     state.products = tempProducts;
-        //     state.loading = false;
-        // },
         setProducts(state) {
             Vue.axios.get('https://5e5b7f0f2faeae0014f92b43.mockapi.io/api/products').then((response) => {
                 let storeProducts = response.data;
@@ -134,7 +120,7 @@ export const store = new Vuex.Store({
             state.cart = [];
             this.commit('setProducts')
             this.commit('addTotals');
-        },
+        }
     }
 })
 
