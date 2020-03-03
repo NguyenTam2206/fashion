@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
         cartTax: 0,
         cartTotal: 0,
         loading: true,
+        showProducts : [],
         getItem(id) {
             const product = this.products.find(item => item.id === id);
             return product;
@@ -21,6 +22,24 @@ export const store = new Vuex.Store({
             return quantify
         },
     },
+
+    getters : {
+        getHomeProducts(state) {
+            let products = [];
+            for(let i = 0 ; i < 8 ; i++) {
+                products.push(state.products[i])
+            }
+            return state.showProducts = products
+        },
+        get12Products(state) {
+            let products = [];
+            for(let i = 0 ; i < 12 ; i++) {
+                products.push(state.products[i])
+            }
+            return state.showProducts = products
+        },
+    },
+
     mutations: {
         // setProducts(state) {
         //     let tempProducts = [];

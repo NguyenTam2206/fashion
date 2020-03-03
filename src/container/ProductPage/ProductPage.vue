@@ -2,22 +2,32 @@
   <div>
     <SubNav />
     <div class="container">
-      <p>Hello from Product Page of {{id}}</p>
-      <div style="height: 3000px; background: yellow"></div>
+      <h2>{{id ? `Dành cho ${id}` : 'Tất cả sản phẩm'}}</h2>
+      <hr />
     </div>
+    <ProductsList :list="products" />
+    <div class="col-2 offset-5 text-center btn btn-info mt-3">Xem Thêm</div>
   </div>
 </template>
 
 <script>
 import SubNav from "../HomePage/SubNav";
+import ProductsList from "../../components/ProductsList";
+
 export default {
   data() {
     return {
-      id: this.$route.params.id //note this.$route
+      id: this.$route.params.id, //note this.$route
     };
   },
+  computed: {
+    products() {
+      return this.$store.getters.get12Products;
+    },
+  },
   components: {
-    SubNav
+    SubNav,
+    ProductsList
   },
   watch: {
     $route(to) {
@@ -28,4 +38,12 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  margin-top: 30px;
+  color: grey;
+  text-align: center;
+}
+hr {
+  width: 150px;
+}
 </style>
