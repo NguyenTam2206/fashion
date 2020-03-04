@@ -35,6 +35,7 @@ export default {
       })
       this.$store.commit('addFilter', filteredProducts)
       this.$router.push({path: `/searchpage/${this.search}`})
+      this.search = ''
     },
     deletekey() {
         this.search = ''
