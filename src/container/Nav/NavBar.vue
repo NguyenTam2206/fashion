@@ -33,15 +33,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input
-              size="sm"
-              class="mr-sm-2"
-              placeholder="Search"
-              style="border-radius: 15px;"
-            ></b-form-input>
-            <span>
-              <i class="fas fa-search" />
-            </span>
+            <SearchBar />
           </b-nav-form>
 
           <b-nav-item-dropdown :text="lang" right>
@@ -81,6 +73,7 @@
 <script>
 import Logo from "../../assets/logo.svg";
 import Cart from "../../components/Cart";
+import SearchBar from './SearchBar';
 export default {
   data() {
     return {
@@ -106,7 +99,8 @@ export default {
     }
   },
   components: {
-    Cart
+    Cart,
+    SearchBar
   }
 };
 </script>

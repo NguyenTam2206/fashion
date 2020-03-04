@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
         cartTax: 0,
         cartTotal: 0,
         loading: true,
+        searchProducts : [],
         getItem(id) {
             const product = this.products.find(item => item.id === id);
             return product;
@@ -120,6 +121,10 @@ export const store = new Vuex.Store({
             state.cart = [];
             this.commit('setProducts')
             this.commit('addTotals');
+        },
+        addFilter(state, products) {
+            state.searchProducts = products
+            console.log(products)
         }
     }
 })

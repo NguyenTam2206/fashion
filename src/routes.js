@@ -6,6 +6,7 @@ import ErrorPage from './container/Error/Error';
 import CartPage from './container/CartPage/CartPage';
 import DetailProduct from './container/DetailPage/DetailProduct';
 import CheckOut from './container/CheckOut/CheckOut';
+import SearchPage from './container/SearchPage/SearchPage';
 
 export const routes = [
     {path : '/', name : 'homepage', component : HomePage},
@@ -17,5 +18,6 @@ export const routes = [
     {path : '*', redirect: { name: 'errorpage' }},
     {path : '/cart', name: 'cartpage', component : CartPage},
     {path : '/detail', name : 'detailpage', component : DetailProduct },
-    {path : '/checkout' , name: 'checkoutpage' , component : CheckOut}
+    {path : '/checkout' , name: 'checkoutpage' , component : CheckOut},
+    {path: '/searchpage/:keyword', name: 'searchpage', component : SearchPage}
 ]
